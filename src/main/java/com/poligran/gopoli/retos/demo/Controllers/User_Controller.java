@@ -20,13 +20,18 @@ import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
 import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.Entities.Role;
 import com.poligran.gopoli.retos.demo.Entities.User;
+import com.poligran.gopoli.retos.demo.Errors.APIError;
+import com.poligran.gopoli.retos.demo.Errors.UserInternalServerException;
+import com.poligran.gopoli.retos.demo.Errors.UserNotFoundException;
 import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +53,7 @@ public class User_Controller {
     @GetMapping("/usuarios")
     public ResponseEntity<?> obtenerTodos() {
 
+
         List<User> users = user_repository.findAll();
 
         if (users.isEmpty()) {
@@ -62,20 +68,29 @@ public class User_Controller {
 
             return ResponseEntity.ok(dtoList);
         }
+
+
     }
 
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<?> obtenerUno(@PathVariable int id) {
+    public User obtenerUno(@PathVariable int id) {
 
-        User result =  user_repository.findById(id).orElse(null);
+
+  /*      User result =  user_repository.findById(id).orElse(null);
 
         if (result == null) {
             return ResponseEntity.notFound().build();
         }
         else {
             return ResponseEntity.ok(result);
-        }
+        }*/
+
+
+        return user_repository.findById(id)
+                .orElseThrow(()
+                        -> new UserNotFoundException(id));
+
 
     }
 
@@ -116,7 +131,7 @@ public class User_Controller {
     }
 
     @PutMapping("/producto/{id}")
-    public ResponseEntity<?> editarProducto(@RequestBody User user, @PathVariable int id) {
+    public User editarProducto(@RequestBody User user, @PathVariable int id) {
 
 
        return user_repository.findById(id).map(p -> {
@@ -126,12 +141,15 @@ public class User_Controller {
             p.setEmail(user.getEmail());
             p.setPhone_number(user.getPhone_number());
 
-            return ResponseEntity.ok(user_repository.save(p));
+            return user_repository.save(p);
 
 
-        }).orElseGet(() -> {
-            return ResponseEntity.notFound().build();
-        });
+        }).orElseThrow(() -> new UserNotFoundException(id));
+
+
+
+               /*  return ResponseEntity.notFound().build();
+        });*/
 
 
 
@@ -140,15 +158,31 @@ public class User_Controller {
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> borrarUsuario(@PathVariable int id) {
-        user_repository.deleteById(id);
+   //     user_repository.deleteById(id);
+
+        User user = user_repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+
+
+        user_repository.delete(user);
+
         return ResponseEntity.noContent().build();
+
+
     }
 
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<APIError> handleUsuarioNoEncontrado(UserNotFoundException ex) {
+        APIError apiError = new APIError();
+        apiError.setEstado(HttpStatus.NOT_FOUND);
+        apiError.setFecha(LocalDateTime.now());
+        apiError.setMensaje(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
 
 
 
-
-
-
+    }
 }
+
+
