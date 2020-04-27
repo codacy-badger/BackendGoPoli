@@ -17,10 +17,9 @@
 package com.poligran.gopoli.retos.demo.Controllers;
 
 import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
-import com.poligran.gopoli.retos.demo.DTO.CreateUserDTO;
+import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.Entities.Role;
 import com.poligran.gopoli.retos.demo.Entities.User;
-import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +82,7 @@ public class User_Controller {
 
 
     @PostMapping("/usuario")
-    public ResponseEntity<User> nuevoUsuario
+    public ResponseEntity<?> nuevoUsuario
             (@RequestParam String firts_name,
              @RequestParam String last_name,
              @RequestParam String email,
@@ -105,7 +104,10 @@ public class User_Controller {
         // Se asigna el rol al objeto User //
         nuevoUser.setRole(role);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(user_repository.save(nuevoUser));
+        user_repository.save(nuevoUser);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUser.getId());
 
 
     }
@@ -131,6 +133,7 @@ public class User_Controller {
 
 
     }
+
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> borrarUsuario(@PathVariable int id) {
