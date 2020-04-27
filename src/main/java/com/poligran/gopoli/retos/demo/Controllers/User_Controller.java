@@ -47,12 +47,13 @@ public class User_Controller {
 
     @GetMapping("/usuarios")
     public ResponseEntity<?> obtenerTodos() {
+
         List<User> users = user_repository.findAll();
+
         if (users.isEmpty()) {
             return ResponseEntity.notFound().build();
 
         } else {
-
 
             List<UserDTO> dtoList =
                     users.stream()
@@ -62,6 +63,7 @@ public class User_Controller {
             return ResponseEntity.ok(dtoList);
         }
     }
+
 
     @GetMapping("/usuario/{id}")
     public ResponseEntity<?> obtenerUno(@PathVariable int id) {
@@ -74,6 +76,7 @@ public class User_Controller {
         else {
             return ResponseEntity.ok(result);
         }
+
     }
 
 

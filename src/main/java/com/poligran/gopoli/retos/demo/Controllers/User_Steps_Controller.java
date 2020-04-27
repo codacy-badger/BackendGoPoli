@@ -18,6 +18,9 @@ package com.poligran.gopoli.retos.demo.Controllers;
 
 
 import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
+import com.poligran.gopoli.retos.demo.Converter.User_StepsDTOConverter;
+import com.poligran.gopoli.retos.demo.DTO.UserDTO;
+import com.poligran.gopoli.retos.demo.DTO.User_StepsDTO;
 import com.poligran.gopoli.retos.demo.Entities.User;
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
 import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
@@ -26,9 +29,13 @@ import com.poligran.gopoli.retos.demo.Repositories.User_Steps_Repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,14 +45,31 @@ public class User_Steps_Controller {
     private final User_Repository user_repository;
     private final User_Steps_Repository user_steps_repository;
 
+    private final User_StepsDTOConverter user_stepsDTOConverter;
+
+
+    @GetMapping("/ranking")
+    public ResponseEntity<?> obtenerTodos() {
+
+        List<User_Steps> users = user_steps_repository.findAllByOrderByStepsDesc();
+
+        if (users.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            List<User_StepsDTO> dtoList = users.stream()
+                    .map(user_stepsDTOConverter::convertToDto)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(dtoList);
+        }
+    }
+
+
 
     @PostMapping("/steps")
     public ResponseEntity<?> contadorPasos(@RequestParam int id, @RequestParam long steps) {
 
-
         User_Steps user_steps = user_steps_repository.findById(id).orElse(null);
         User usuario = user_repository.findById(id).orElse(null);
-
 
         if (usuario != null) {
             if (user_steps == null) {
@@ -67,4 +91,9 @@ public class User_Steps_Controller {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+
+
+
+
 }

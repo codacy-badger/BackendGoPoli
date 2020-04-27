@@ -19,8 +19,11 @@ package com.poligran.gopoli.retos.demo.Repositories;
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface User_Steps_Repository extends JpaRepository<User_Steps, Integer> {
 
+    public List<User_Steps> findAllByOrderByStepsDesc();
 
 
 }

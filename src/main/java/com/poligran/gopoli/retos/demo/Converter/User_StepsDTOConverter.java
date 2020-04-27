@@ -14,21 +14,28 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.DTO;
+package com.poligran.gopoli.retos.demo.Converter;
 
 
+import com.poligran.gopoli.retos.demo.DTO.UserDTO;
+import com.poligran.gopoli.retos.demo.DTO.User_StepsDTO;
 import com.poligran.gopoli.retos.demo.Entities.User;
-import lombok.Getter;
-import lombok.Setter;
+import com.poligran.gopoli.retos.demo.Entities.User_Steps;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
-@Getter
-@Setter
-public class User_StepsDTO {
 
-    private String firts_nameUser;
-    private String last_nameUser;
-    private long steps;
+@Component
+@RequiredArgsConstructor
+public class User_StepsDTOConverter {
 
+    private final ModelMapper modelMapper;
+
+
+    public User_StepsDTO convertToDto(User_Steps user_steps) {
+        return modelMapper.map(user_steps, User_StepsDTO.class);
+    }
 
 
 }
