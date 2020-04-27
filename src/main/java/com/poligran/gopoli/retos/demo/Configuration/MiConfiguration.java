@@ -14,16 +14,19 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo;
+package com.poligran.gopoli.retos.demo.Configuration;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class DemoApplication {
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+
+@Configuration
+public class MiConfiguration {
+
+    @Bean
+    public ModelMapper modelMapper () {
+        return new ModelMapper();
     }
-
 }

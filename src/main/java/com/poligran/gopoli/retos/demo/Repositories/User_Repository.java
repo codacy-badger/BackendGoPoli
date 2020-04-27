@@ -14,16 +14,10 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo;
+package com.poligran.gopoli.retos.demo.Repositories;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.poligran.gopoli.retos.demo.Entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@SpringBootApplication
-public class DemoApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
-
+public interface User_Repository extends JpaRepository<User, Integer > {
 }

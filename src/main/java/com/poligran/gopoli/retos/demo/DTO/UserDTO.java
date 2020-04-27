@@ -14,16 +14,19 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo;
+package com.poligran.gopoli.retos.demo.DTO;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class DemoApplication {
+import lombok.Getter;
+import lombok.Setter;
 
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
+@Getter @Setter
+public class UserDTO {
+
+    private int id;
+
+    private String firts_name;
+    private long phone_number;
+    private String roleNombre;
 
 }

@@ -14,16 +14,33 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo;
+package com.poligran.gopoli.retos.demo.Entities;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@SpringBootApplication
-public class DemoApplication {
+import javax.persistence.*;
 
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class User {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String firts_name;
+    private String last_name;
+    private String email;
+    private long phone_number;
+
+    @ManyToOne
+    @JoinColumn (name = "role_id")
+    private Role role;
+
+
 
 }
