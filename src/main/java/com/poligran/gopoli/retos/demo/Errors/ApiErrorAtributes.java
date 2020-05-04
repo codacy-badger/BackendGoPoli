@@ -14,15 +14,18 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Repositories;
+package com.poligran.gopoli.retos.demo.Errors;
 
-import com.poligran.gopoli.retos.demo.Entities.Role;
-import com.poligran.gopoli.retos.demo.Entities.RoleName;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.WebRequest;
 
-import java.util.Optional;
-@Repository
-public interface Role_Repository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(RoleName roleName);
+import java.util.Map;
+
+@Component
+public class ApiErrorAtributes extends DefaultErrorAttributes {
+    @Override
+    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
+        return super.getErrorAttributes(webRequest, includeStackTrace);
+    }
 }

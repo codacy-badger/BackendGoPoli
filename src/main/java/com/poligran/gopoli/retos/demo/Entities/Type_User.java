@@ -14,15 +14,26 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Errors;
+package com.poligran.gopoli.retos.demo.Entities;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-public class UserInternalServerException extends RuntimeException {
-    public UserInternalServerException (int id) {
-        super("Hay un conflicto con el usuario " + id);
-    }
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+
+@Data @NoArgsConstructor @AllArgsConstructor
+@Entity
+public class Type_User {
+
+    @Id
+    @GeneratedValue
+    private int id;
+    private String nombre;
+
 
 }

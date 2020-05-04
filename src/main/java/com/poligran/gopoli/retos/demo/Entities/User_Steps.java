@@ -28,10 +28,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="Steps")
 public class User_Steps implements Serializable {
 
     @Id
-    private Integer id;
+    private Long id;
 
     @OneToOne
     @JoinColumn

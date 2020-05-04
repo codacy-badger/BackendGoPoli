@@ -17,7 +17,6 @@
 package com.poligran.gopoli.retos.demo.DTO;
 
 
-import com.poligran.gopoli.retos.demo.Entities.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +27,8 @@ public class User_StepsDTO {
     private String firts_nameUser;
     private String last_nameUser;
     private long steps;
+    private String nombreRoleUser;
+
 
 
 

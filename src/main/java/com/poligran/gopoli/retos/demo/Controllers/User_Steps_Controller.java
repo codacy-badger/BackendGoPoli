@@ -17,13 +17,9 @@
 package com.poligran.gopoli.retos.demo.Controllers;
 
 
-import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
 import com.poligran.gopoli.retos.demo.Converter.User_StepsDTOConverter;
-import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.DTO.User_StepsDTO;
-import com.poligran.gopoli.retos.demo.Entities.User;
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
-import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Steps_Repository;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,8 +61,21 @@ public class User_Steps_Controller {
     }
 
 
+   /* @GetMapping("/rankingbyrol")
+    public ResponseEntity<?> obtenerPorRol(@RequestParam String role) {
+        List<User_Steps> users = user_steps_repository.findUser_StepsByUser_Role_NombreOrderByStepsDesc(role);
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontro usuarios con " + role);
+        } else {
+            List<User_StepsDTO> dtoList = users.stream()
+                    .map(user_stepsDTOConverter::convertToDto)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(dtoList);
+        }
+    }*/
 
-    @PostMapping("/steps")
+
+   /* @PostMapping("/steps")
     public ResponseEntity<?> contadorPasos(@RequestParam int id, @RequestParam long steps) {
 
         User_Steps user_steps = user_steps_repository.findById(id).orElse(null);
@@ -90,9 +100,7 @@ public class User_Steps_Controller {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    }
-
-
+    }*/
 
 
 

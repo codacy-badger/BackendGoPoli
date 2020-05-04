@@ -14,15 +14,32 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Repositories;
+package com.poligran.gopoli.retos.demo.Errors;
 
-import com.poligran.gopoli.retos.demo.Entities.Role;
-import com.poligran.gopoli.retos.demo.Entities.RoleName;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.time.LocalDateTime;
 
-import java.util.Optional;
-@Repository
-public interface Role_Repository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(RoleName roleName);
+import org.springframework.http.HttpStatus;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
+public class ApiError {
+
+	@NonNull
+	private HttpStatus estado;
+	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime fecha = LocalDateTime.now();
+	@NonNull
+	private String mensaje;
+	
 }

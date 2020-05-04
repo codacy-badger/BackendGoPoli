@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class UserNotFoundException extends RuntimeException{
 
-    public UserNotFoundException (int id) {
-        super("No se puede encontrar el producto con el ID: " +  id);
+    public UserNotFoundException (String email) {
+        super("No se puede encontrar el producto con el email: " +  email);
     }
 
 }

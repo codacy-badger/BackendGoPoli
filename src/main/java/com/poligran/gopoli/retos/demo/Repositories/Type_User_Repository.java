@@ -14,27 +14,14 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Errors;
+package com.poligran.gopoli.retos.demo.Repositories;
 
+import com.poligran.gopoli.retos.demo.Entities.Type_User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.http.HttpStatus;
-
-import java.time.LocalDateTime;
-
-@Setter @Getter
-public class APIError {
-
-    private HttpStatus estado;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy hh:mm:ss")
-    private LocalDateTime fecha;
-    private String mensaje;
-
-
-
+@Repository
+public interface Type_User_Repository extends JpaRepository<Type_User, Integer > {
 
 
 }

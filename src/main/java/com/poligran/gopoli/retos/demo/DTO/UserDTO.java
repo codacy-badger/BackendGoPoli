@@ -17,16 +17,19 @@
 package com.poligran.gopoli.retos.demo.DTO;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDTO {
 
     private int id;
-
     private String firts_name;
-    private long phone_number;
+    private String last_name;
+    private String email;
+    private String phone_number;
     private String roleNombre;
 
 }

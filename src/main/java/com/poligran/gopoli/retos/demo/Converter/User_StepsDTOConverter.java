@@ -17,9 +17,7 @@
 package com.poligran.gopoli.retos.demo.Converter;
 
 
-import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.DTO.User_StepsDTO;
-import com.poligran.gopoli.retos.demo.Entities.User;
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

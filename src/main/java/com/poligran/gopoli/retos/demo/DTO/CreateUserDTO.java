@@ -27,6 +27,6 @@ public class CreateUserDTO {
     private String firts_name;
     private String last_name;
     private String email;
-    private long phone_number;
+    private String phone_number;
 
 }

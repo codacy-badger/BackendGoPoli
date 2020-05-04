@@ -18,171 +18,89 @@ package com.poligran.gopoli.retos.demo.Controllers;
 
 import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
 import com.poligran.gopoli.retos.demo.DTO.UserDTO;
-import com.poligran.gopoli.retos.demo.Entities.Role;
+import com.poligran.gopoli.retos.demo.Entities.Type_User;
 import com.poligran.gopoli.retos.demo.Entities.User;
-import com.poligran.gopoli.retos.demo.Errors.APIError;
-import com.poligran.gopoli.retos.demo.Errors.UserInternalServerException;
-import com.poligran.gopoli.retos.demo.Errors.UserNotFoundException;
-import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
+import com.poligran.gopoli.retos.demo.Repositories.Type_User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class User_Controller {
 
-
+    @Autowired
     private final User_Repository user_repository;
+
     private final UserDTOConverter userDTOConverter;
-
-
-    private final Role_Repository role_repository;
-
+    private final Type_User_Repository typeUser_repository;
 
 
 
-    @GetMapping("/usuarios")
-    public ResponseEntity<?> obtenerTodos() {
+    @GetMapping("/users")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> authenticateUser() {
 
+        List<User> user = user_repository.findAll();
 
-        List<User> users = user_repository.findAll();
-
-        if (users.isEmpty()) {
-            return ResponseEntity.notFound().build();
-
-        } else {
-
-            List<UserDTO> dtoList =
-                    users.stream()
-                            .map(userDTOConverter::convertToDto)
-                            .collect(Collectors.toList());
-
-            return ResponseEntity.ok(dtoList);
-        }
-
-
-    }
-
-
-    @GetMapping("/usuario/{id}")
-    public User obtenerUno(@PathVariable int id) {
-
-
-  /*      User result =  user_repository.findById(id).orElse(null);
-
-        if (result == null) {
-            return ResponseEntity.notFound().build();
-        }
-        else {
-            return ResponseEntity.ok(result);
-        }*/
-
-
-        return user_repository.findById(id)
-                .orElseThrow(()
-                        -> new UserNotFoundException(id));
-
+        return ResponseEntity.ok(user);
 
     }
 
 
 
-    // Creación del Usuario //
 
 
-    @PostMapping("/usuario")
+
+/*    @PostMapping("/usuario")
     public ResponseEntity<?> nuevoUsuario
             (@RequestParam String firts_name,
-             @RequestParam String last_name,
-             @RequestParam String email,
-             @RequestParam long phone_number,
-             @RequestParam int rol) {
-
-        //CreateUserDTO user = user_repository.save(nuevo);
-        //return ResponseEntity.status(HttpStatus.CREATED).body(user);
-
-        User nuevoUser = new User();
-        nuevoUser.setFirts_name(firts_name);
-        nuevoUser.setLast_name(last_name);
-        nuevoUser.setEmail(email);
-        nuevoUser.setPhone_number(phone_number);
-
-        //Se obtiene el objeto rol //
-        Role role = role_repository.findById(rol).orElse(null);
-
-        // Se asigna el rol al objeto User //
-        nuevoUser.setRole(role);
-
-        user_repository.save(nuevoUser);
+                              @RequestParam String last_name,
+                              @RequestParam String email, @RequestParam String password,
+                              @RequestParam long phone_number,
+                              @RequestParam int rol) {
 
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUser.getId());
+        try {
+
+            User usuario = new User();
+            usuario.setEmail(email);
+         //   usuario.set(passwordEncoder.encode(password));
+
+            usuario.setFirts_name(firts_name);
+            usuario.setLast_name(last_name);
+            usuario.setPhone_number(phone_number);
+
+            Type_User role = typeUser_repository.findById(rol).orElse(null);
+            usuario.setTypeUser(role);
 
 
-    }
+         //  UserDTO usuarioDTO = userDTOConverter.convertToDto(usuario);
 
-    @PutMapping("/producto/{id}")
-    public User editarProducto(@RequestBody User user, @PathVariable int id) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(user_repository.save(usuario));
 
+        } catch (DataIntegrityViolationException exception) {
 
-       return user_repository.findById(id).map(p -> {
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hay un problema al crear el usuario.");
 
-            p.setFirts_name(user.getFirts_name());
-            p.setLast_name(user.getLast_name());
-            p.setEmail(user.getEmail());
-            p.setPhone_number(user.getPhone_number());
-
-            return user_repository.save(p);
-
-
-        }).orElseThrow(() -> new UserNotFoundException(id));
+        }
+    }*/
 
 
 
-               /*  return ResponseEntity.notFound().build();
-        });*/
 
-
-
-    }
-
-
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> borrarUsuario(@PathVariable int id) {
-   //     user_repository.deleteById(id);
-
-        User user = user_repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-
-
-        user_repository.delete(user);
-
-        return ResponseEntity.noContent().build();
-
-
-    }
-
-
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<APIError> handleUsuarioNoEncontrado(UserNotFoundException ex) {
-        APIError apiError = new APIError();
-        apiError.setEstado(HttpStatus.NOT_FOUND);
-        apiError.setFecha(LocalDateTime.now());
-        apiError.setMensaje(ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
-
-
-
-    }
 }
 
 
