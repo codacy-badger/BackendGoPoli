@@ -14,17 +14,14 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Security;
+package com.poligran.gopoli.retos.demo.Repositories;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.poligran.gopoli.retos.demo.Entities.News_Feed;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.lang.annotation.*;
+import java.util.List;
 
-@Target({ElementType.PARAMETER, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@AuthenticationPrincipal
+public interface News_Feed_Repository  extends JpaRepository<News_Feed, Long> {
 
-public @interface CurrentUser {
 
 }

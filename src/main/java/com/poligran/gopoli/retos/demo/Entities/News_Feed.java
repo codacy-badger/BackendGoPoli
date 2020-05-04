@@ -14,17 +14,33 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Security;
+package com.poligran.gopoli.retos.demo.Entities;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-import java.lang.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Target({ElementType.PARAMETER, ElementType.TYPE})
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@AuthenticationPrincipal
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-public @interface CurrentUser {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="News_Feed")
+public class News_Feed {
+
+
+    private Long id;
+
+    private String title;
+
+    private String description;
+
+    private String picture;
+
+
+
 
 }
