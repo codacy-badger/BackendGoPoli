@@ -108,7 +108,7 @@ public class UserPrincipal implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        com.poligran.gopoli.retos.demo.Auth.UserPrincipal that = (com.poligran.gopoli.retos.demo.Auth.UserPrincipal) o;
+        UserPrincipal that = (UserPrincipal) o;
         return Objects.equals(id, that.id);
     }
 

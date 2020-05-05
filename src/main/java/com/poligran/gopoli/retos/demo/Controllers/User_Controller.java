@@ -20,6 +20,7 @@ import com.poligran.gopoli.retos.demo.Converter.UserDTOConverter;
 import com.poligran.gopoli.retos.demo.DTO.UserDTO;
 import com.poligran.gopoli.retos.demo.Entities.Type_User;
 import com.poligran.gopoli.retos.demo.Entities.User;
+import com.poligran.gopoli.retos.demo.Objects.UserIdentityAvailability;
 import com.poligran.gopoli.retos.demo.Repositories.Type_User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,18 @@ public class User_Controller {
         List<User> user = user_repository.findAll();
 
         return ResponseEntity.ok(user);
+
+    }
+
+    @GetMapping("/user/checkUsernameAvailability")
+    public Boolean checkUsernameAvailability(@RequestParam(value = "username") String username) {
+        return !user_repository.existsByUsername(username);
+
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public Boolean checkEmailAvailability(@RequestParam(value = "email") String email) {
+        return !user_repository.existsByEmail(email);
 
     }
 

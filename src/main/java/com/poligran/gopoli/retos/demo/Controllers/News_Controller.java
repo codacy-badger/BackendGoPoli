@@ -14,15 +14,32 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Repositories;
+package com.poligran.gopoli.retos.demo.Controllers;
+
 
 import com.poligran.gopoli.retos.demo.Entities.News_Feed;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.poligran.gopoli.retos.demo.Repositories.News_Feed_Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class News_Controller {
+
+    @Autowired
+    private  News_Feed_Repository news_feed_repository;
 
 
-@Repository
-public interface News_Feed_Repository  extends JpaRepository<News_Feed, Long> {
+    @GetMapping ("/feed")
+    public ResponseEntity<?> getFeed () {
+        List<News_Feed> feed = news_feed_repository.findAll();
+        return ResponseEntity.ok(feed);
+    }
+
+
 
 
 }

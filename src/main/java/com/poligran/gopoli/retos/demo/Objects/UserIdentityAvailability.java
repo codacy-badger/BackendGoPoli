@@ -14,33 +14,23 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Entities;
+package com.poligran.gopoli.retos.demo.Objects;
 
+public class UserIdentityAvailability {
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+    private Boolean available;
 
-import javax.persistence.*;
+    public UserIdentityAvailability(Boolean available) {
+        this.available = available;
+    }
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name="News_Feed")
-public class News_Feed extends DateAudit {
+    public Boolean getAvailable() {
+        return available;
+    }
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String title;
-
-    private String description;
-
-    private String picture;
-
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
 
 
 

@@ -19,17 +19,19 @@ package com.poligran.gopoli.retos.demo.Entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="Steps")
-public class User_Steps implements Serializable {
+public class User_Steps implements Serializable  {
 
     @Id
     private Long id;

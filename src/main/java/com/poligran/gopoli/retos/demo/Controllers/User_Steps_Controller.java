@@ -19,6 +19,7 @@ package com.poligran.gopoli.retos.demo.Controllers;
 
 import com.poligran.gopoli.retos.demo.Converter.User_StepsDTOConverter;
 import com.poligran.gopoli.retos.demo.DTO.User_StepsDTO;
+import com.poligran.gopoli.retos.demo.Entities.User;
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Steps_Repository;
@@ -75,10 +76,11 @@ public class User_Steps_Controller {
     }*/
 
 
-   /* @PostMapping("/steps")
-    public ResponseEntity<?> contadorPasos(@RequestParam int id, @RequestParam long steps) {
+   @PostMapping("/steps")
+    public ResponseEntity<?> contadorPasos(@RequestParam Long id, @RequestParam long steps) {
 
         User_Steps user_steps = user_steps_repository.findById(id).orElse(null);
+
         User usuario = user_repository.findById(id).orElse(null);
 
         if (usuario != null) {
@@ -100,7 +102,7 @@ public class User_Steps_Controller {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    }*/
+    }
 
 
 
