@@ -61,13 +61,13 @@ public class User_Controller {
     }
 
     @GetMapping("/user/checkUsernameAvailability")
-    public Boolean checkUsernameAvailability(@RequestParam(value = "username") String username) {
+    public Boolean checkUsernameAvailability(@RequestParam String username) {
         return !user_repository.existsByUsername(username);
 
     }
 
     @GetMapping("/user/checkEmailAvailability")
-    public Boolean checkEmailAvailability(@RequestParam(value = "email") String email) {
+    public Boolean checkEmailAvailability(String email) {
         return !user_repository.existsByEmail(email);
 
     }
