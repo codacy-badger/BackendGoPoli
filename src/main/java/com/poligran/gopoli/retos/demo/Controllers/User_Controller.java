@@ -49,7 +49,6 @@ public class User_Controller {
     private final Type_User_Repository typeUser_repository;
 
 
-
     @GetMapping("/users")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> authenticateUser() {
@@ -66,8 +65,8 @@ public class User_Controller {
 
     }
 
-    @GetMapping("/user/checkEmailAvailability")
-    public Boolean checkEmailAvailability(String email) {
+    @PostMapping("/user/checkEmailAvailability")
+    public Boolean checkEmailAvailability(@RequestParam String email) {
         return !user_repository.existsByEmail(email);
 
     }
@@ -110,8 +109,6 @@ public class User_Controller {
 
         }
     }*/
-
-
 
 
 }
