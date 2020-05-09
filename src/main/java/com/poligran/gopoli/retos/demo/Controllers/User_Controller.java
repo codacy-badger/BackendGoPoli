@@ -60,7 +60,7 @@ public class User_Controller {
 
     }
 
-    @GetMapping("/user/checkUsernameAvailability")
+    @PostMapping("/user/checkUsernameAvailability")
     public Boolean checkUsernameAvailability(@RequestParam String username) {
         return !user_repository.existsByUsername(username);
 
