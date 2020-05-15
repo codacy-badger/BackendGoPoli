@@ -22,15 +22,12 @@ import com.poligran.gopoli.retos.demo.Entities.Role;
 import com.poligran.gopoli.retos.demo.Entities.RoleName;
 import com.poligran.gopoli.retos.demo.Entities.Type_User;
 import com.poligran.gopoli.retos.demo.Entities.User;
-import com.poligran.gopoli.retos.demo.Errors.AppException;
+import com.poligran.gopoli.retos.demo.Exceptions.AppException;
 import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.Type_User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import com.poligran.gopoli.retos.demo.Security.JwtAuthenticationResponse;
 import com.poligran.gopoli.retos.demo.Security.JwtTokenProvider;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +45,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
-import java.util.Optional;
-import com.sendgrid.*;
 
 
 @RestController

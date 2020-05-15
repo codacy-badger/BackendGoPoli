@@ -14,18 +14,19 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Errors;
+package com.poligran.gopoli.retos.demo.Exceptions;
 
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.Map;
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class BadRequestException extends RuntimeException {
 
-@Component
-public class ApiErrorAtributes extends DefaultErrorAttributes {
-    @Override
-    public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
-        return super.getErrorAttributes(webRequest, includeStackTrace);
+    public BadRequestException(String message) {
+        super(message);
+    }
+
+    public BadRequestException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

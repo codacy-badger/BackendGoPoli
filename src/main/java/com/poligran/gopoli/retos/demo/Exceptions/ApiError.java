@@ -14,17 +14,32 @@
  *
  */
 
-package com.poligran.gopoli.retos.demo.Errors;
+package com.poligran.gopoli.retos.demo.Exceptions;
 
+import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class UserNotFoundException extends RuntimeException{
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-    public UserNotFoundException (String email) {
-        super("No se puede encontrar el producto con el email: " +  email);
-    }
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@RequiredArgsConstructor
+@NoArgsConstructor
+public class ApiError {
+
+	@NonNull
+	private HttpStatus estado;
+	@JsonFormat(shape = Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
+	private LocalDateTime fecha = LocalDateTime.now();
+	@NonNull
+	private String mensaje;
+	
 }
