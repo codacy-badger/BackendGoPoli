@@ -22,6 +22,8 @@ import com.poligran.gopoli.retos.demo.Repositories.News_Feed_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,7 +41,10 @@ public class News_Controller {
         return ResponseEntity.ok(feed);
     }
 
-
-
-
+    @PostMapping ("/addnews")
+    public ResponseEntity<?> addFeed (@RequestParam String description,
+                                      @RequestParam String picture_url,
+                                      @RequestParam String title) {
+        return ResponseEntity.ok(news_feed_repository.save(new News_Feed(title, description, picture_url)));
+    }
 }

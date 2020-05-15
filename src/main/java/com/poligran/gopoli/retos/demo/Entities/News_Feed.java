@@ -42,6 +42,10 @@ public class News_Feed extends DateAudit {
     private String picture;
 
 
-
+    public News_Feed(String title, String description, String picture) {
+        this.title = title;
+        this.description = description;
+        this.picture = picture;
+    }
 
 }

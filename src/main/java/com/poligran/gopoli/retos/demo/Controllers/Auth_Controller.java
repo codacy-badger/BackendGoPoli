@@ -28,6 +28,9 @@ import com.poligran.gopoli.retos.demo.Repositories.Type_User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import com.poligran.gopoli.retos.demo.Security.JwtAuthenticationResponse;
 import com.poligran.gopoli.retos.demo.Security.JwtTokenProvider;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +45,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Optional;
+import com.sendgrid.*;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -102,10 +108,7 @@ public class Auth_Controller {
             @RequestParam int type_user,
             @RequestParam String username,
             @RequestParam String email,
-            @RequestParam String password
-
-
-    ) {
+            @RequestParam String password) throws IOException {
 
         //  @RequestBody SignUpRequest signUpRequest
 
@@ -137,9 +140,40 @@ public class Auth_Controller {
                 .fromCurrentContextPath().path("/api/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
 
+
+    /*    sendEmail(email);
+*/
+
+
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
 
     }
 
+   /* void sendEmail(String email) throws IOException {
+
+        Email from = new Email("test@example.com");
+        String subject = "Sending with SendGrid is Fun";
+        Email to = new Email("test@example.com");
+        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+        Request request = new Request();
+
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
+        }
+
+
+    }
+*/
 
 }

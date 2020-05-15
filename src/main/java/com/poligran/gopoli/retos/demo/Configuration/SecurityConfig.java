@@ -123,13 +123,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/user/user/checkEmailAvailability")
                 .permitAll()
+                .antMatchers("https://api.sendgrid.com/v3/resource")
+                .permitAll()
+                .antMatchers("/addnews")
+                .permitAll()
+                .antMatchers("/feed")
+                .permitAll()
                 .antMatchers("/api/user/users")
                 .permitAll()
                 .antMatchers(
-                "/v2/api-docs",
-                "/swagger-resources",
-                "/swagger-resources/configuration/ui",
-                "/swagger-resources/configuration/security")
+                        "/v2/api-docs",
+                        "/swagger-resources",
+                        "/swagger-resources/configuration/ui",
+                        "/swagger-resources/configuration/security")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
