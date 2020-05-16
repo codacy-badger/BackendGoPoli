@@ -129,6 +129,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/feed")
                 .permitAll()
+                .antMatchers("/ranking")
+                .permitAll()
                 .antMatchers("/api/user/users")
                 .permitAll()
                 .antMatchers(

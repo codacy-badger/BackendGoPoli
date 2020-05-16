@@ -16,11 +16,14 @@
 
 package com.poligran.gopoli.retos.demo.Security;
 
+import com.poligran.gopoli.retos.demo.Entities.User;
+
 public class JwtAuthenticationResponse {
 
     private String accessToken;
     private String tokenType = "Bearer";
     private Long userId;
+    private User user;
 
 
 
