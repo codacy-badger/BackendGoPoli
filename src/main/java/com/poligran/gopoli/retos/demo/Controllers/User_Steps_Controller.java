@@ -24,6 +24,8 @@ import com.poligran.gopoli.retos.demo.Entities.User_Steps;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Steps_Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +51,9 @@ public class User_Steps_Controller {
     @GetMapping("/ranking")
     public ResponseEntity<?> obtenerTodos() {
 
-        List<User_Steps> users = user_steps_repository.findAllByOrderByStepsDesc();
+        Pageable limit = PageRequest.of(0,50);
+        List<User_Steps> users = user_steps_repository.findAllByOrderByStepsDesc(limit);
+
 
         if (users.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -57,6 +61,9 @@ public class User_Steps_Controller {
             List<User_StepsDTO> dtoList = users.stream()
                     .map(user_stepsDTOConverter::convertToDto)
                     .collect(Collectors.toList());
+
+
+
             return ResponseEntity.ok(dtoList);
         }
     }

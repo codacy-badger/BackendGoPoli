@@ -26,7 +26,7 @@ import com.poligran.gopoli.retos.demo.Exceptions.AppException;
 import com.poligran.gopoli.retos.demo.Repositories.Role_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.Type_User_Repository;
 import com.poligran.gopoli.retos.demo.Repositories.User_Repository;
-import com.poligran.gopoli.retos.demo.Security.JwtAuthenticationResponse;
+import com.poligran.gopoli.retos.demo.Security.JwtAuthenticationResponseUser;
 import com.poligran.gopoli.retos.demo.Security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +45,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collections;
+import java.util.Optional;
 
 
 @RestController
@@ -59,6 +60,7 @@ public class Auth_Controller {
 
     @Autowired
     Role_Repository roleRepository;
+
 
     @Autowired
     Type_User_Repository type_user_repository;
@@ -78,17 +80,19 @@ public class Auth_Controller {
 
         String jwt = tokenProvider.generateToken(authentication);
         User user = userRepository.findByUsernameOrEmail(email, email).orElse(null);
-        assert user != null;
-        Long id = user.getId();
 
 
 
+        JwtAuthenticationResponseUser jwtAuthenticationResponseUser =
+                new JwtAuthenticationResponseUser(jwt, user.getId(), user.getFirts_name(),
+                        user.getLast_name(),
+                        user.getPhone_number(),
+                        Integer.toString(user.getTypeUser().getId()),
+                        user.getUsername(),
+                        user.getEmail());
 
-        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse(jwt,id);
 
-
-
-        return ResponseEntity.ok(jwtAuthenticationResponse);
+        return ResponseEntity.ok(jwtAuthenticationResponseUser);
 
 
 
@@ -138,9 +142,8 @@ public class Auth_Controller {
 
     /*    sendEmail(email);
 */
+        return ResponseEntity.created(location).body("User registered successfully");
 
-
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
 
     }
 

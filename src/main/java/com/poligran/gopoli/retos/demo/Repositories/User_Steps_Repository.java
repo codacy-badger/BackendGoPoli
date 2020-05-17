@@ -17,6 +17,7 @@
 package com.poligran.gopoli.retos.demo.Repositories;
 
 import com.poligran.gopoli.retos.demo.Entities.User_Steps;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +26,6 @@ import java.util.List;
 @Repository
 public interface User_Steps_Repository extends JpaRepository <User_Steps, Long> {
 
-    List<User_Steps> findAllByOrderByStepsDesc();
+    List<User_Steps> findAllByOrderByStepsDesc(Pageable limit);
 
 }
